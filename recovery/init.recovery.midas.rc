@@ -1,0 +1,18 @@
+on init
+    mount configfs none /config
+    mkdir /config/usb_gadget/g1 0770 shell shell
+    write /config/usb_gadget/g1/idVendor 0x04e8
+    write /config/usb_gadget/g1/idProduct 0x685c
+    mkdir /config/usb_gadget/g1/strings/0x409 0770
+    write /config/usb_gadget/g1/strings/0x409/serialnumber "123456"
+    write /config/usb_gadget/g1/strings/0x409/manufacturer "Samsung"
+    write /config/usb_gadget/g1/strings/0x409/product "Midas"
+    mkdir /config/usb_gadget/g1/functions/ffs.adb
+    setprop sys.usb.configfs 1
+
+on property:sys.usb.ffs.ready=1
+    mkdir /config/usb_gadget/g1/configs/b.1 0777 shell shell
+    mkdir /config/usb_gadget/g1/configs/b.1/strings/0x409 0770 shell shell
+    write /config/usb_gadget/g1/configs/b.1/strings/0x409/configuration "adb"
+    symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1
+    write /config/usb_gadget/g1/UDC "12480000.hsotg"

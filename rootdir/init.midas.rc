@@ -1,0 +1,35 @@
+import /init.usb.configfs.rc
+
+on boot
+    mkdir /dev/usb-ffs 0770 shell shell
+    mkdir /dev/usb-ffs/adb 0770 shell shell
+    mount configfs none /config
+    mkdir /config/usb_gadget/g1 0770 shell shell
+    write /config/usb_gadget/g1/idVendor 0x18d1
+    write /config/usb_gadget/g1/idProduct 0x4e26
+    mkdir /config/usb_gadget/g1/strings/0x409
+    write /config/usb_gadget/g1/strings/0x409/serialnumber "0123456789"
+    write /config/usb_gadget/g1/strings/0x409/manufacturer "Samsung"
+    write /config/usb_gadget/g1/strings/0x409/product I9300
+    mkdir /config/usb_gadget/g1/configs/c.1
+    mkdir /config/usb_gadget/g1/functionfs/ffs.adb
+    mount functionfs adb /dev/usb-ffs/adb uid=2000,gid=2000
+    setprop sys.usb.configfs 1
+    setprop sys.usb.controller "12480000.hsotg"
+    symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/c.1/ffs.adb
+    start adbd
+    wait /config/usb_gadget/g1/UDC
+    write /config/usb_gadget/g1/UDC "12480000.hsotg"
+
+on fs
+    mkdir /preload
+    mount_all /fstab.${ro.hardware}
+
+    start loggy
+    chown radio system /efs
+    chmod 0771 /efs
+
+service loggy /system/bin/sh /loggy.sh
+    class core
+    user root
+    oneshot
