@@ -1,3 +1,7 @@
+on early-init
+    exec u:r:modprobe:s0 -- /sbin/modprobe -ad /lib/modules \
+        mms114 panel-magnachip-ea8061 panel-samsung-s6evr02 panel-samsung-s6e8aa0
+
 on init
     mount configfs none /config
     mkdir /config/usb_gadget/g1 0770 shell shell
