@@ -57,6 +57,9 @@ TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/rootdir/fstab.midas
 TARGET_RECOVERY_PIXEL_FORMAT :=  BGRA_8888
 TARGET_RECOVERY_UI_BRIGHTNESS_FILE := /sys/class/backlight/panel/brightness
 TARGET_RECOVERY_UI_MAX_BRIGHTNESS_FILE := /sys/class/backlight/panel/max_brightness
+ifeq ($(WITH_TWRP),true)
+include $(LOCAL_PATH)/twrp.mk
+endif
 
 # Treble
 PRODUCT_FULL_TREBLE_OVERRIDE := true

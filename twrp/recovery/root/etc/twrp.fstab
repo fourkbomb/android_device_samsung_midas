@@ -1,0 +1,8 @@
+/dev/block/platform/12550000.mmc/by-name/EFS		/efs			ext4		flags=backup=1
+/dev/block/platform/12550000.mmc/by-name/SYSTEM	 /system			ext4
+/dev/block/platform/12550000.mmc/by-name/CACHE	  /vendor		 ext4
+/dev/block/platform/12550000.mmc/by-name/HIDDEN	 /bootdata	   ext4		        flags=backup=1;display="Boot/Recovery"
+/dev/block/platform/12550000.mmc/by-name/USERDATA   /data			ext4
+/dev/block/platform/12550000.mmc/by-name/OTA		/misc		   emmc
+
+/dev/block/platform/12550000.mmc/by-name/RADIO	  /modem				emmc

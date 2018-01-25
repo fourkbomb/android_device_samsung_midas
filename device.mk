@@ -29,8 +29,10 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/init.midas.rc:root/init.midas.rc \
 	$(LOCAL_PATH)/recovery/init.recovery.midas.rc:root/init.recovery.midas.rc
 
-# Screen density
+# Screen
 PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := xhdpi
+TARGET_SCREEN_HEIGHT := 1280
+TARGET_SCREEN_WIDTH := 720
 
 $(call inherit-product-if-exists, vendor/samsung/midas/device-vendor.mk)
