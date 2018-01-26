@@ -15,8 +15,19 @@
 #
 LOCAL_PATH := device/samsung/midas
 
-# Bootloader: we install this image to the 'HIDDEN' partition.
-PRODUCT_CUSTOM_IMAGE_MAKEFILES := $(LOCAL_PATH)/boot/bootdata.mk
+# DTBs
+TARGET_DTBS := \
+	exynos4412-i9300.dtb \
+	exynos4412-i9305.dtb \
+	exynos4412-n710x.dtb
+
+TARGET_DTB_OVERLAYS := \
+	exynos4412-midas-android.dtb \
+	exynos4412-t0-ea8061.dtb \
+	exynos4412-t0-s6evr02.dtb
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/boot/config.ini:install/bootdata/config.ini
 
 # EGL
 PRODUCT_PACKAGES += \
