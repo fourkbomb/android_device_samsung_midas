@@ -29,9 +29,10 @@ TARGET_DTB_OVERLAYS := \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/boot/config.ini:install/bootdata/config.ini
 
-# EGL
+# Graphics
 PRODUCT_PACKAGES += \
-    libGLES_android
+	libGLES_mesa \
+	gralloc.gbm
 
 # Init
 PRODUCT_COPY_FILES += \

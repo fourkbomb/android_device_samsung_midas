@@ -52,6 +52,9 @@ TARGET_KERNEL_CONFIG := midas_android_defconfig
 TARGET_KERNEL_DTBS_DIR := install/bootdata/dtbs
 NEED_KERNEL_MODULE_ROOT := true
 
+# Mesa
+BOARD_GPU_DRIVERS := swrast
+
 # Platform
 TARGET_BOARD_PLATFORM := exynos4
 TARGET_SOC := exynos4412
