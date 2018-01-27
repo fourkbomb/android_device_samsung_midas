@@ -73,3 +73,4 @@ endif
 
 # Treble
 PRODUCT_FULL_TREBLE_OVERRIDE := true
+BOARD_VNDK_VERSION := current
