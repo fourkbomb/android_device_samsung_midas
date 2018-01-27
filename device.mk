@@ -46,4 +46,8 @@ PRODUCT_AAPT_PREF_CONFIG := xhdpi
 TARGET_SCREEN_HEIGHT := 1280
 TARGET_SCREEN_WIDTH := 720
 
+# Treble
+PRODUCT_PACKAGES += \
+	vndk_package
+
 $(call inherit-product-if-exists, vendor/samsung/midas/device-vendor.mk)
