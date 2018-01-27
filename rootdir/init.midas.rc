@@ -5,7 +5,7 @@ on early-init
         mms114 panel-magnachip-ea8061 panel-samsung-s6evr02 panel-samsung-s6e8aa0
 
 on fs
-    mkdir /preload
+    mkdir /bootdata
     mount_all /fstab.${ro.hardware}
 
     chown radio system /efs
