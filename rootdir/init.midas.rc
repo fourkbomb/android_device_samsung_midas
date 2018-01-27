@@ -1,5 +1,8 @@
 import /init.midas.usb.rc
 
+on early-init
+    exec u:r:modprobe:s0 -- /sbin/modprobe -ad /lib/modules \
+        mms114 panel-magnachip-ea8061 panel-samsung-s6evr02 panel-samsung-s6e8aa0
 
 on fs
     mkdir /preload
