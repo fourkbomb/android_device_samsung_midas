@@ -36,7 +36,6 @@ PRODUCT_PACKAGES += \
 # Init
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/fstab.midas:root/fstab.midas \
-    $(LOCAL_PATH)/rootdir/loggy.sh:root/loggy.sh \
     $(LOCAL_PATH)/rootdir/init.midas.rc:root/init.midas.rc \
     $(LOCAL_PATH)/rootdir/init.midas.usb.rc:root/init.midas.usb.rc \
 	$(LOCAL_PATH)/recovery/init.recovery.midas.rc:root/init.recovery.midas.rc

@@ -5,11 +5,5 @@ on fs
     mkdir /preload
     mount_all /fstab.${ro.hardware}
 
-    start loggy
     chown radio system /efs
     chmod 0771 /efs
-
-service loggy /system/bin/sh /loggy.sh
-    class core
-    user root
-    oneshot
