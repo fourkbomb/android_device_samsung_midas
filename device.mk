@@ -31,7 +31,9 @@ PRODUCT_COPY_FILES += \
 
 # Graphics
 PRODUCT_PACKAGES += \
-	libGLES_mesa \
+	libGLESv1_swiftshader \
+	libGLESv2_swiftshader \
+	libEGL_swiftshader \
 	gralloc.gbm
 
 # Init
