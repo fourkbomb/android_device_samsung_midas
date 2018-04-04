@@ -1,0 +1,10 @@
+# front-facing camera - must be on rootfs!
+root/lib/firmware/exynos4_fimc_is_fw.bin
+root/lib/firmware/exynos4_s5k6a3_setfile.bin
+
+# Wifi
+vendor/lib/firmware/brcm/brcmfmac4334-sdio.txt
+vendor/lib/firwmare/brcm/brcmfmac4334-sdio.bin
+
+# MFC
+vendor/lib/firmware/s5p-mfc.fw
