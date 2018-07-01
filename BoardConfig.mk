@@ -47,7 +47,7 @@ BOARD_KERNEL_BASE := 0x40000000
 BOARD_KERNEL_CMDLINE := console=ttySAC2,115200 androidboot.hardware=midas androidboot.selinux=permissive
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_IMAGE_NAME := zImage
-TARGET_KERNEL_SOURCE := kernel/samsung/i9300
+TARGET_KERNEL_SOURCE := kernel/samsung/midas
 TARGET_KERNEL_CONFIG := midas_android_defconfig
 TARGET_KERNEL_DTBS_DIR := install/bootdata/dtbs
 NEED_KERNEL_MODULE_ROOT := true
