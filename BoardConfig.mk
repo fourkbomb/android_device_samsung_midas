@@ -49,7 +49,6 @@ BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_IMAGE_NAME := zImage
 TARGET_KERNEL_SOURCE := kernel/samsung/midas
 TARGET_KERNEL_CONFIG := midas_android_defconfig
-TARGET_KERNEL_DTBS_DIR := install/bootdata/dtbs
 NEED_KERNEL_MODULE_ROOT := true
 
 # Mesa
@@ -61,9 +60,6 @@ TARGET_SOC := exynos4412
 TARGET_BOOTLOADER_BOARD_NAME := midas
 
 TARGET_NO_BOOTLOADER := true
-
-# Releasetools
-TARGET_RELEASETOOLS_EXTENSIONS := $(LOCAL_PATH)/releasetools
 
 # Recovery
 TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/rootdir/fstab.midas

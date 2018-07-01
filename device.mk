@@ -15,20 +15,6 @@
 #
 LOCAL_PATH := device/samsung/midas
 
-# DTBs
-TARGET_DTBS := \
-	exynos4412-i9300.dtb \
-	exynos4412-i9305.dtb \
-	exynos4412-n710x.dtb
-
-TARGET_DTB_OVERLAYS := \
-	exynos4412-midas-android.dtb \
-	exynos4412-t0-ea8061.dtb \
-	exynos4412-t0-s6evr02.dtb
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/boot/config.ini:install/bootdata/config.ini
-
 # Graphics
 PRODUCT_PACKAGES += \
 	libGLESv1_swiftshader \
