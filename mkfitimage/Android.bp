@@ -1,0 +1,9 @@
+cc_binary_host {
+    name: "mkfitimage",
+
+    srcs: [
+        "mkfitimage.c"
+    ],
+
+    static_libs: ["libfdt"],
+}
