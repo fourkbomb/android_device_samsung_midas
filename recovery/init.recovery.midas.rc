@@ -8,7 +8,7 @@ on init
     write /config/usb_gadget/g1/idVendor 0x04e8
     write /config/usb_gadget/g1/idProduct 0x685c
     mkdir /config/usb_gadget/g1/strings/0x409 0770
-    write /config/usb_gadget/g1/strings/0x409/serialnumber "123456"
+    write /config/usb_gadget/g1/strings/0x409/serialnumber ${ro.boot.serialno}
     write /config/usb_gadget/g1/strings/0x409/manufacturer "Samsung"
     write /config/usb_gadget/g1/strings/0x409/product "Midas"
     mkdir /config/usb_gadget/g1/functions/ffs.adb
