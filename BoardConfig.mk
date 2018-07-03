@@ -43,6 +43,13 @@ BOARD_USES_VENDORIMAGE := true
 TARGET_COPY_OUT_VENDOR := vendor
 
 # Kernel
+SUPPORTED_BOARDS := i9300 i9305 n7100 n7105
+BOARD_AUTO_DT_OVERLAYS := midas-android
+BOARD_DT_OVERLAYS := n710x-ea8061 n710x-s6evr02
+BOARD_CUSTOM_MKBOOTIMG = $(HOST_OUT_EXECUTABLES)/mkfitimage$(HOST_EXECUTABLE_SUFFIX)
+BOARD_MKBOOTIMG_ARGS = $(foreach dtb,$(strip $(SUPPORTED_BOARDS)),--dtb $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/arch/arm/boot/dts/exynos4412-$(dtb).dtb) \
+					   $(foreach dtb,$(strip $(BOARD_AUTO_DT_OVERLAYS)),--dtbo-auto $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/arch/arm/boot/dts/overlay/exynos4412-$(dtb).dtbo) \
+					   $(foreach dtb,$(strip $(BOARD_DT_OVERLAYS)),--dtbo $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/arch/arm/boot/dts/overlay/exynos4412-$(dtb).dtbo)
 BOARD_KERNEL_BASE := 0x40000000
 BOARD_KERNEL_CMDLINE := console=ttySAC2,115200 androidboot.hardware=midas androidboot.selinux=permissive
 BOARD_KERNEL_PAGESIZE := 2048
