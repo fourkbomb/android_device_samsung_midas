@@ -62,7 +62,7 @@ TARGET_KERNEL_CONFIG := midas_android_defconfig
 NEED_KERNEL_MODULE_ROOT := true
 
 # Mesa
-BOARD_GPU_DRIVERS := swrast
+BOARD_GPU_DRIVERS := exynos lima swrast
 
 # Platform
 TARGET_BOARD_PLATFORM := exynos4
@@ -83,4 +83,6 @@ endif
 
 # Treble
 PRODUCT_FULL_TREBLE_OVERRIDE := true
+# FIXME: mesa/gbm-gralloc (which are SP-HALs) depend on libexpat (which is non-SP only)
+BOARD_VNDK_RUNTIME_DISABLE := true
 BOARD_VNDK_VERSION := current

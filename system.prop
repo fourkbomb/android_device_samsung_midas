@@ -1,2 +1,3 @@
 # Graphics
+gralloc.gbm.device=/dev/dri/card0
 ro.hardware.gralloc=gbm

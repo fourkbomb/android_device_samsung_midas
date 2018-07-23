@@ -17,10 +17,14 @@ LOCAL_PATH := device/samsung/midas
 
 # Graphics
 PRODUCT_PACKAGES += \
-	libGLESv1_swiftshader \
-	libGLESv2_swiftshader \
-	libEGL_swiftshader \
-	gralloc.gbm
+	android.hardware.graphics.allocator@2.0-impl \
+	android.hardware.graphics.composer@2.1-impl \
+	android.hardware.graphics.mapper@2.0-impl \
+	gralloc.gbm \
+	hwcomposer.midas \
+	libGLES_mesa \
+	libexpat.vendor \
+	libstdc++.vendor
 
 # Init
 PRODUCT_COPY_FILES += \
