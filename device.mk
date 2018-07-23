@@ -39,4 +39,6 @@ TARGET_SCREEN_WIDTH := 720
 PRODUCT_PACKAGES += \
 	vndk_package
 
+DEVICE_MANIFEST_FILE := $(LOCAL_PATH)/manifest.xml
+
 $(call inherit-product-if-exists, vendor/samsung/midas/device-vendor.mk)
