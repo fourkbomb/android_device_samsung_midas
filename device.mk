@@ -23,8 +23,11 @@ PRODUCT_PACKAGES += \
 	gralloc.gbm \
 	hwcomposer.midas \
 	libGLES_mesa \
-	libexpat.vendor \
 	libstdc++.vendor
+
+# FIXME: remove this.
+PRODUCT_COPY_FILES += \
+	$(LOCAL_PATH)/prebuilt/libexpat.so:vendor/lib/libexpat.so
 
 # Init
 PRODUCT_COPY_FILES += \

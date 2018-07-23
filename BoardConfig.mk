@@ -85,5 +85,5 @@ endif
 BOARD_PROPERTY_OVERRIDES_SPLIT_ENABLED := true
 PRODUCT_FULL_TREBLE_OVERRIDE := true
 # FIXME: mesa/gbm-gralloc (which are SP-HALs) depend on libexpat (which is non-SP only)
-BOARD_VNDK_RUNTIME_DISABLE := true
+#BOARD_VNDK_RUNTIME_DISABLE := true
 BOARD_VNDK_VERSION := current
