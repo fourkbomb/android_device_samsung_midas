@@ -3,28 +3,25 @@
 #include <stdlib.h>
 #include <string.h>
 #define LOG_TAG "lamecomposer"
+#include <android/gralloc_handle.h>
 #include <log/log.h>
 #include <hardware/hardware.h>
 #include <hardware/hwcomposer.h>
 #include <linux/fb.h>
 #include <sys/ioctl.h>
+#include <xf86drm.h>
+#include <xf86drmMode.h>
+#include <unistd.h>
 
-struct hwc_context {
-	struct hwc_composer_device_1 dev;
-	hwc_procs_t const *procs;
-	int fb;
-	int32_t vsync_period;
-	int32_t xres;
-	int32_t yres;
-	int32_t xdpi;
-	int32_t ydpi;
-};
+#include "hwc.h"
 
 static int hwc_prepare(struct hwc_composer_device_1 *dev,
 		size_t numDisplays, hwc_display_contents_1_t **displays)
 {
 	for (size_t i = 0; i < displays[0]->numHwLayers; i++) {
-		displays[0]->hwLayers[i].compositionType = HWC_FRAMEBUFFER;
+		ALOGI("p:%d => %d", displays[0]->hwLayers[i].compositionType, HWC_FRAMEBUFFER);
+		if (displays[0]->hwLayers[i].compositionType != HWC_FRAMEBUFFER_TARGET)
+			displays[0]->hwLayers[i].compositionType = HWC_FRAMEBUFFER;
 	}
 
 	return 0;
@@ -33,8 +30,44 @@ static int hwc_prepare(struct hwc_composer_device_1 *dev,
 static int hwc_set(struct hwc_composer_device_1 *dev,
 		size_t numDisplays, hwc_display_contents_1_t **displays)
 {
+	struct hwc_context *ctx = (struct hwc_context *)dev;
+	hwc_display_contents_1_t *contents = displays[0];
+	struct gralloc_handle_t *handle;
+	int ret;
+	uint32_t primeHandle;
+	uint32_t drmHandle;
 
-	ALOGI("I should hwc_set but i'm not");
+	if (!contents) {
+		ALOGW("nothing to render on display 0, (numDisplays: %d)", numDisplays);
+		return 0;
+	}
+
+	hwc_layer_1_t *framebuffer = NULL;
+
+	ALOGI("%d layers", contents->numHwLayers);
+	for (int i = 0; i < contents->numHwLayers; i++) {
+		ALOGI("s:%d => %d", i, contents->hwLayers[i].compositionType);
+		if (contents->hwLayers[i].compositionType == HWC_FRAMEBUFFER_TARGET) {
+			ALOGI("Found EGL FB: %d", i);
+			framebuffer = &contents->hwLayers[i];
+			break;
+		}
+	}
+
+	if (framebuffer == NULL) {
+		ALOGE("Expected a framebuffer layer!");
+		return 0;
+	}
+	handle = gralloc_handle(framebuffer->handle);
+
+	ret = hwc_drm_show(ctx, handle, framebuffer->acquireFenceFd);
+	if (ret < 0) {
+		ALOGE("hwc_drm_show failed: %d", ret);
+		return ret;
+	}
+
+	framebuffer->releaseFenceFd = ret;
+
 	return 0;
 }
 
@@ -101,21 +134,27 @@ static int hwc_getDisplayAttributes(struct hwc_composer_device_1 *dev,
 	while (attributes[i] != HWC_DISPLAY_NO_ATTRIBUTE) {
 		switch (attributes[i]) {
 		case HWC_DISPLAY_VSYNC_PERIOD:
+			ALOGI("%d - vsync_period", ctx->vsync_period);
 			values[i] = ctx->vsync_period;
 			break;
 		case HWC_DISPLAY_WIDTH:
+			ALOGI("%d - xres", ctx->xres);
 			values[i] = ctx->xres;
 			break;
 		case HWC_DISPLAY_HEIGHT:
+			ALOGI("%d - yres", ctx->yres);
 			values[i] = ctx->yres;
 			break;
 		case HWC_DISPLAY_DPI_X:
+			ALOGI("%d - xdpi", ctx->xdpi);
 			values[i] = ctx->xdpi;
 			break;
 		case HWC_DISPLAY_DPI_Y:
+			ALOGI("%d - ydpi", ctx->ydpi);
 			values[i] = ctx->ydpi;
 			break;
 		default:
+			ALOGE("%d - unknown", attributes[i]);
 			return -EINVAL;
 		}
 		i++;
@@ -134,6 +173,7 @@ static int hwc_open(const struct hw_module_t *module, const char *name,
 		struct hw_device_t **device)
 {
 	struct hwc_context *dev;
+	int ret;
 	dev = (struct hwc_context *)malloc(sizeof(*dev));
 	if (!dev)
 		return -ENOMEM;
@@ -161,6 +201,10 @@ static int hwc_open(const struct hw_module_t *module, const char *name,
 		ALOGE("%s: failed to open FB", __func__);
 		return -EINVAL;
 	}
+
+	ret = hwc_drm_init(dev);
+	if (ret)
+		return ret;
 
 	struct fb_var_screeninfo lcdinfo;
 
